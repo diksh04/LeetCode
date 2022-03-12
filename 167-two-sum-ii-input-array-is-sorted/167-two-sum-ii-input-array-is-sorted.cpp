@@ -10,7 +10,7 @@ public:
             {
                 ans.push_back(i+1);
                 ans.push_back(j+1);
-                return ans;
+                break;
             }
             else if(sum>target)
             {
@@ -21,8 +21,6 @@ public:
                 i++;
             }
         }
-        ans.push_back(-1);
-        ans.push_back(-1);
         return ans;
     }
 };
