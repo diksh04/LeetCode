@@ -12,10 +12,7 @@ public:
                     i++;
                 }
             }
-            if(st.empty()!=true)
-            {
-                return false;
-            }
-            return true;
+            
+            return st.empty();
     }
 };
