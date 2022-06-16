@@ -9,15 +9,16 @@ public:
         int max_len=1;
         int st=0,end=0;
 //         odd length
-        for(int i=0;i<n-1;i++)
+        for(int i=0;i<n-1;i++)// babad ,i=b
+                            //   01234
         {
-            int l=i,r=i;
+            int l=i,r=i;// l=b,r=b
             while(l>=0 && r<n )
             {
                 if(s[l]==s[r])
                 {
-                    l--;
-                    r++;
+                    l--;// -1 
+                    r++;// 3
                 }
                 else
                 {
@@ -29,7 +30,7 @@ public:
              {
                  max_len = len;
                  st=l+1;
-                 r=end-1;
+                 end=r-1;
              }
         }
         
@@ -54,7 +55,7 @@ public:
              {
                  max_len = len;
                  st=l+1;
-                 r=end-1;
+                 end=r-1;
              }
         }
         return s.substr(st,max_len);
