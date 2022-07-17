@@ -1,28 +1,27 @@
-bool compare(vector<int>v1,vector<int>v2)
-    {
-        return v1[1]>v2[1];
-    }
+bool compare(vector<int> b1 , vector<int>b2)
+{
+    return b1[1]>b2[1];
+}
 class Solution {
 public:
     
     int maximumUnits(vector<vector<int>>& boxTypes, int truckSize) {
-        sort(boxTypes.begin(),boxTypes.end(),compare);
-        int units = 0,i=0;
-        while(truckSize>0 && i<boxTypes.size())
+        sort(boxTypes.begin(),boxTypes.end(),compare); 
+        
+        int sum = 0,ans=0,i;
+        for(i = 0; i<boxTypes.size() ; i++ )
         {
-            if(boxTypes[i][0]<=truckSize)
+            if(sum+boxTypes[i][0]<=truckSize)
             {
-                units+=boxTypes[i][0]*boxTypes[i][1];
-                truckSize-=boxTypes[i][0];
+                sum+=boxTypes[i][0];
+                ans+=boxTypes[i][0]*boxTypes[i][1];
             }
             else
             {
-                int take = truckSize;
-                truckSize=0;
-                units+=take*boxTypes[i][1];
+                ans += (truckSize-sum)*boxTypes[i][1];
+                break;
             }
-            i++;
         }
-        return units;
+        return ans;
     }
 };
