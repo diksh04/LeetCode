@@ -3,13 +3,13 @@ public:
     int minMoves2(vector<int>& nums) {
         sort(nums.begin(),nums.end());
         int n = nums.size();
-//         find the median
-        int median = n%2==0 ? (nums[n/2]+nums[n/2-1])/2 : nums[n/2];
-         int steps = 0;
-        for(int num : nums)
+        int steps = 0;
+        int i = 0,j = n-1;
+        while(i<j)
         {
-            steps+=abs(num-median);
-            
+            steps+=abs(nums[i]-nums[j]);
+            i++;
+            j--;
         }
         return steps;
     }
