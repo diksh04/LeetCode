@@ -9,12 +9,12 @@ public:
         roman.insert(make_pair('C',100));
         roman.insert(make_pair('D',500));
         roman.insert(make_pair('M',1000));
-        int sum = 0,num=0;
+        int sum = 0,num = 0;
         for(int i=0;i<s.size();)
         {
             if(i==s.size()-1 || roman[s[i]]>=roman[s[i+1]])
             {
-                num=roman[s[i]];
+                num = roman[s[i]];
                 i++;
             }
             else
