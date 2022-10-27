@@ -10,6 +10,8 @@ class Solution {
   public:
     void helper(int arr[],int N,vector<int>& ans)
     {
+        // 100 50 20 65
+        // 100 50 20 40
         stack<int>st;
         for(int i=0,j=1;j<N;i++,j++)
         {
