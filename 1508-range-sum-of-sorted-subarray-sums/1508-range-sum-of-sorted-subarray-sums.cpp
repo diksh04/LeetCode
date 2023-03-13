@@ -1,25 +1,23 @@
 class Solution {
 public:
     int rangeSum(vector<int>& nums, int n, int left, int right) {
-        vector<long long int>ans;
+        //optimized from O(N3) to O(n2)
+        vector<int>arr;// 1 3 6 10 2 5 9 
         for(int i=0;i<nums.size();i++)
         {
+            int prefixSum = 0;
             for(int j=i;j<nums.size();j++)
             {
-                long long int sum = 0;
-                for(int k=i;k<=j;k++)
-                {
-                    sum+=nums[k];
-                }
-                ans.push_back(sum);
+                prefixSum+=nums[j];
+                arr.push_back(prefixSum);
             }
         }
-        sort(ans.begin(),ans.end());
-        long long int res=0;
+        sort(arr.begin(),arr.end());
+        long long sum = 0;
         for(int i=left;i<=right;i++)
         {
-            res+=ans[i-1];
+            sum+=arr[i-1];
         }
-        return res%1000000007;
+        return sum%1000000007;
     }
 };
