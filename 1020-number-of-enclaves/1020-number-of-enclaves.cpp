@@ -1,50 +1,67 @@
 class Solution {
 public:
-    void dfs(int x, int y, int m, int n, vector<vector<int>>& grid, vector<vector<bool>>& visit) {
-        if (x < 0 || x >= m || y < 0 || y >= n || grid[x][y] == 0 || visit[x][y]) {
+    int dx[4] = {1,-1,0,0};
+    int dy[4] = {0,0,1,-1};
+    void dfs(vector<vector<int>>& grid,int x,int y,int &n,int &m)
+    {
+        if(x<0 || y<0 || x>=n || y>=m || grid[x][y]==0)
+        {
             return;
         }
-
-        visit[x][y] = true;
-        vector<int> dirx{0, 1, 0, -1};
-        vector<int> diry{-1, 0, 1, 0};
-
-        for (int i = 0; i < 4; i++) {
-            dfs(x + dirx[i], y + diry[i], m, n, grid, visit);
+        grid[x][y]=0;
+        for(int i=0;i<4;i++)
+        {
+            dfs(grid,x+dx[i],y+dy[i],n,m);
         }
-        return;
     }
-
     int numEnclaves(vector<vector<int>>& grid) {
-        int m = grid.size();
-        int n = grid[0].size();
-        vector<vector<bool>> visit(m, vector<bool>(n));
-
-        for (int i = 0; i < m; i++) {
-            if (grid[i][0] == 1 && !visit[i][0]) {
-                dfs(i, 0, m, n, grid, visit);
-            }
-            if (grid[i][n - 1] == 1 && !visit[i][n - 1]) {
-                dfs(i, n - 1, m, n, grid, visit);
-            }
-        }
-
-        for (int i = 0; i < n; i++) {
-
-            if (grid[0][i] == 1 && !visit[0][i]) {
-                dfs(0, i, m, n, grid, visit);
-            }
-            if (grid[m - 1][i] == 1 && !visit[m - 1][i]) {
-                dfs(m - 1, i, m, n, grid, visit);
-            }
-        }
-
+        //boundary-traversal
         int count = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 1 && !visit[i][j]) {
-                    count++;
-                }
+        queue<pair<int,int>>q;
+        int n = grid.size();
+        int m = grid[0].size();
+        // top and bottom wall
+        for(int i=0;i<m;i++)
+        {
+            if(grid[0][i]==1)
+            {
+                q.push({0,i});
+            }
+            if(grid[n-1][i]==1)
+            {
+                q.push({n-1,i});
+            }
+        }
+        // left and right wall
+        for(int i=1;i<n-1;i++)
+        {
+            if(grid[i][0]==1)
+            {
+                q.push({i,0});
+            }
+            if(grid[i][m-1]==1)
+            {
+                q.push({i,m-1});
+            }
+        }
+        while(!q.empty())
+        {
+            pair<int,int>front = q.front();
+            q.pop();
+            int x = front.first;
+            int y = front.second;
+            
+            // if(grid[x][y]==0)
+            // {
+            //     continue;
+            // }
+            dfs(grid,x,y,n,m);
+        }
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                count+=grid[i][j];
             }
         }
         return count;
