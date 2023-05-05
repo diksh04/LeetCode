@@ -9,7 +9,7 @@ public:
         return false;
     }
     int maxVowels(string s, int k) {
-        int vowels = 0,maxLen = INT_MIN;
+        int vowels=0,maxLen = INT_MIN;
         for(int i=0;i<k;i++)
         {
             if(isVowel(s[i]))
@@ -18,7 +18,7 @@ public:
             }
         }
         maxLen = max(maxLen,vowels);
-        for(int i = k;i < s.size(); i++)
+        for(int i = k;i<s.size();i++)
         {
             if(isVowel(s[i-k]))
             {
@@ -28,7 +28,7 @@ public:
             {
                 vowels++;
             }
-             maxLen = max(maxLen,vowels);
+            maxLen = max(vowels,maxLen);
         }
         return maxLen;
        
