@@ -1,69 +1,58 @@
 class Solution {
 public:
-    int dx[4] = {1,-1,0,0};
-    int dy[4] = {0,0,1,-1};
-    void dfs(vector<vector<int>>& grid,int x,int y,int &n,int &m)
+    int drow[4] = {-1,0,1,0};
+    int dcol[4] = {0,1,0,-1};
+    void dfs(int r,int c,vector<vector<int>>& vis,vector<vector<int>>& grid)
     {
-        if(x<0 || y<0 || x>=n || y>=m || grid[x][y]==0)
-        {
-            return;
-        }
-        grid[x][y]=0;
+        vis[r][c] = 1;
         for(int i=0;i<4;i++)
         {
-            dfs(grid,x+dx[i],y+dy[i],n,m);
+            int nrow = r + drow[i];
+            int ncol = c + dcol[i];
+            if(nrow>=0 && nrow<grid.size() && ncol>=0 && ncol<grid[0].size() && !vis[nrow][ncol] && grid[nrow][ncol]==1)
+            {
+                dfs(nrow,ncol,vis,grid);
+            }
         }
     }
     int numEnclaves(vector<vector<int>>& grid) {
-        //boundary-traversal
-        int count = 0;
-        queue<pair<int,int>>q;
-        int n = grid.size();
-        int m = grid[0].size();
-        // top and bottom wall
-        for(int i=0;i<m;i++)
+        int n = grid.size(),m = grid[0].size();
+        vector<vector<int>>vis(n,vector<int>(m,0));
+        // top and bottom cell
+        for(int j=0;j<m;j++)
         {
-            if(grid[0][i]==1)
+            if(!vis[0][j] && grid[0][j]==1)
             {
-                q.push({0,i});
+                dfs(0,j,vis,grid);
             }
-            if(grid[n-1][i]==1)
+            if(!vis[n-1][j] && grid[n-1][j]==1)
             {
-                q.push({n-1,i});
+                dfs(n-1,j,vis,grid);
             }
         }
-        // left and right wall
-        for(int i=1;i<n-1;i++)
+        //left and right cell
+        for(int i=0;i<n;i++)
         {
-            if(grid[i][0]==1)
+            if(!vis[i][0] && grid[i][0]==1)
             {
-                q.push({i,0});
+                dfs(i,0,vis,grid);
             }
-            if(grid[i][m-1]==1)
+            if(!vis[i][m-1] && grid[i][m-1]==1)
             {
-                q.push({i,m-1});
+                dfs(i,m-1,vis,grid);
             }
         }
-        while(!q.empty())
-        {
-            pair<int,int>front = q.front();
-            q.pop();
-            int x = front.first;
-            int y = front.second;
-            
-            // if(grid[x][y]==0)
-            // {
-            //     continue;
-            // }
-            dfs(grid,x,y,n,m);
-        }
+        int countLandcell = 0;
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<m;j++)
             {
-                count+=grid[i][j];
+                if(!vis[i][j] && grid[i][j]==1)
+                {
+                    countLandcell++;
+                }
             }
         }
-        return count;
+        return countLandcell;
     }
 };
