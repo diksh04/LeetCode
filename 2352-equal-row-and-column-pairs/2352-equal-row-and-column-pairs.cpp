@@ -3,30 +3,21 @@ public:
     int equalPairs(vector<vector<int>>& grid) {
         int n = grid.size();
         int count = 0;
-        for(int r = 0;r < n;r++)
+        map<vector<int>,int>mp;
+        
+        for(int r = 0;r<n;r++)
         {
-            for(int c = 0; c < n ;c++)
+            mp[grid[r]]++;
+        }
+        for(int c = 0;c < n;c++)
+        {
+            vector<int>temp;
+            for(int r = 0;r<n;r++)
             {
-                bool check = true;
-                for(int i=0;i<n;i++)
-                {
-                    if(grid[r][i]!=grid[i][c])
-                    {
-                        check = false;
-                        break;
-                    }
-                }
-                if(check)
-                {
-                    count++;
-                }
+                temp.push_back(grid[r][c]);
             }
+            count+=mp[temp];
         }
         return count;
     }
 };
-
-// 3 2 1 -> 1
-// 1 7 6 -> 1
-// 2 7 7 -> 1
-// 
