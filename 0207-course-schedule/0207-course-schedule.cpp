@@ -4,15 +4,14 @@ public:
         vector<int>adj[numCourses];
         for(auto it:prerequisites)
         {
-            adj[it[0]].push_back(it[1]);
+            adj[it[1]].push_back(it[0]);
         }
-        //1->0
         vector<int>indegree(numCourses,0);
         for(int i=0;i<numCourses;i++)
         {
-            for(auto nbr: adj[i])
+            for(auto it:adj[i])
             {
-                indegree[nbr]++;
+                indegree[it]++;
             }
         }
         queue<int>q;
