@@ -98,6 +98,7 @@ class Solution{
     public:
     vector<int> postOrder(Node* node) {
         // code here
+        // TC -> O(2N)
         stack<Node*>st;
         Node* curr = node;
         Node* temp;
