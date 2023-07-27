@@ -112,24 +112,24 @@ class Solution
         }
         map<int,int>mp;
         queue<pair<Node*,int>>q;
-        q.push({root,0});//vertical
+        q.push({root,0});
         while(!q.empty())
         {
             auto it = q.front();
             q.pop();
             Node* node = it.first;
-            int line = it.second;
-            if(mp.find(line)==mp.end())
+            int vert = it.second;
+            if(mp.find(vert)==mp.end())
             {
-                mp[line] = node->data;    
+                mp[vert] = node->data;
             }
             if(node->left)
             {
-                q.push({node->left,line-1});
+                q.push({node->left,vert-1});
             }
             if(node->right)
             {
-                q.push({node->right,line+1});
+                q.push({node->right,vert+1});
             }
         }
         for(auto it:mp)
