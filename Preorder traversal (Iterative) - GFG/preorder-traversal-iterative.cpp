@@ -100,8 +100,8 @@ class Solution{
     vector<int> preOrder(Node* root)
     {
         //code here
-        stack<Node*>st;
         vector<int>ans;
+        stack<Node*>st;
         st.push(root);
         while(!st.empty())
         {
