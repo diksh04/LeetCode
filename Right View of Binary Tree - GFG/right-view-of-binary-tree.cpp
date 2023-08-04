@@ -48,14 +48,14 @@ class Solution
         {
             return;
         }
-        if(lvl==ans.size())
+        if(lvl == ans.size())
         {
             ans.push_back(root->data);
         }
         helper(root->right,lvl+1);
         helper(root->left,lvl+1);
     }
-    vector<int> rightView(Node *root)// root right left
+    vector<int> rightView(Node *root)
     {
        // Your Code here
        helper(root,0);
