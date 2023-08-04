@@ -106,12 +106,8 @@ class Solution
     {
         //Your code here
         vector<int>ans;
-        if(root==NULL)
-        {
-            return ans;
-        }
-        map<int,int>mp;
         queue<pair<Node*,int>>q;
+        map<int,int>mp;
         q.push({root,0});
         while(!q.empty())
         {
