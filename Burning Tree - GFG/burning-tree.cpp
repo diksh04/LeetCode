@@ -96,47 +96,48 @@ struct Node {
 */
 class Solution {
   public:
-   int findMinTime(unordered_map<Node*,Node*>& parent,Node* tar)
-   {
-       queue<Node*>q;
-       q.push(tar);
-       unordered_map<Node*,bool>visited;
-       visited[tar] = true;
-       int maxi = 0;
-       while(!q.empty())
-       {
-           int size = q.size();
+    int findMinTime(unordered_map<Node*,Node*>& parent,Node* tar)
+    {
+        queue<Node*>q;
+        q.push(tar);
+        unordered_map<Node*,bool>vis;
+        vis[tar] = true;
+        int maxi = 0;
+        
+        while(!q.empty())
+        {
+            int size = q.size();
             int flag = 0;
-           for(int i=0;i<size;i++)
-           {
-               Node* node = q.front();
-               q.pop();
-               if(node->left && !visited[node->left])
-               {
-                   flag = 1;
-                   q.push(node->left);
-                   visited[node->left] = true;
-               }
-               if(node->right && !visited[node->right])
-               {
-                   flag = 1;
-                   q.push(node->right);
-                   visited[node->right] = true;
-               }
-               if(parent[node] && !visited[parent[node]])
-               {
-                   flag = 1;
-                   q.push(parent[node]);
-                   visited[parent[node]] = true;
-               }
-           }
-           if(flag)
-           {
-               maxi++;
-           }
-       }
-       return maxi;
-   }
+            for(int i=0;i<size;i++)
+            {
+                Node* node = q.front();
+                q.pop();
+                if(node->left && !vis[node->left])
+                {
+                    flag = 1;
+                    q.push(node->left);
+                    vis[node->left] = true;
+                }
+                if(node->right && !vis[node->right])
+                {
+                    flag = 1;
+                    q.push(node->right);
+                    vis[node->right] = true;
+                }
+                if(parent[node] && !vis[parent[node]])
+                {
+                    flag = 1;
+                    q.push(parent[node]);
+                    vis[parent[node]] = true;
+                }
+            }
+            if(flag)
+            {
+                maxi++;
+            }
+        }
+        return maxi;
+    }
     Node* markParent(Node* root,unordered_map<Node*,Node*>& parent,int target)
     {
         queue<Node*>q;
