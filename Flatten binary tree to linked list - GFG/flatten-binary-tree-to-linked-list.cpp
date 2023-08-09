@@ -99,31 +99,27 @@ void inorder(struct Node* root)
 class Solution
 {
     public:
-
     void flatten(Node *root)
     {
         //code here
-            stack<Node*>st;
-            st.push(root);
-            while(!st.empty())
+        Node* curr = root;
+        while(curr)
+        {
+            if(curr->left)
             {
-                Node* curr = st.top();
-                st.pop();
-                if(curr->right)
+                Node* prev = curr->left;
+                while(prev->right)
                 {
-                    st.push(curr->right);
+                    prev = prev->right;
                 }
-                if(curr->left)
-                {
-                    st.push(curr->left);
-                }
-                if(!st.empty())
-                {
-                    curr->right = st.top();
-                }
+                prev->right = curr->right;
+                curr->right = curr->left;
                 curr->left = NULL;
             }
+            curr = curr->right;
+        }
     }
+    
 };
 
 //{ Driver Code Starts.
