@@ -107,9 +107,9 @@ class Solution{
     {
     	// Code here
     	queue<Node*>q;
-    	vector<int>ans;
     	q.push(root);
     	bool flag = 0;
+    	vector<int>ans;
     	while(!q.empty())
     	{
     	    int n = q.size();
@@ -128,17 +128,17 @@ class Solution{
     	            q.push(node->right);
     	        }
     	    }
-    	    if(flag==1)
-    	    {
-    	        reverse(temp.begin(),temp.end());
-    	    }
-    	    for(auto it:temp)
-    	    {
-    	        ans.push_back(it);
-    	    }
-    	    flag = !flag;
+        	if(flag==1)
+        	{
+        	    reverse(temp.begin(),temp.end());
+        	}
+        	flag = !flag;
+        	for(auto it:temp)
+        	{
+        	    ans.push_back(it);
+        	}
     	}
-    	return ans;
+    return ans;
     }
 };
 
