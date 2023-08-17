@@ -29,12 +29,12 @@ public:
             int c = q.front().first.second;
             int steps = q.front().second;
             q.pop();
-            dist[r][c] = steps;
+            dist[r][c]=steps;
             for(int j=0;j<4;j++)
             {
                 int nrow = r + row[j];
                 int ncol = c + col[j];
-                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && !vis[nrow][ncol])
+                if(nrow>=0 && nrow < n && ncol>=0 && ncol<m && !vis[nrow][ncol])
                 {
                     vis[nrow][ncol] = 1;
                     q.push({{nrow,ncol},steps+1});
