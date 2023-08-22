@@ -14,22 +14,22 @@ class Solution
     {
         
         // code here 
-        int cs = 0,rs = 0;//row sum,col sum
+        int rs = 0,cs = 0;
         int sum = 0;
         for(int i=0;i<n;i++)
         {
-            int c = 0,r = 0;
+            int r = 0,c = 0;
             for(int j=0;j<n;j++)
             {
                 sum+=matrix[i][j];
-                r+= matrix[i][j];
-                c+= matrix[j][i];
+                r+=matrix[i][j];
+                c+=matrix[j][i];
             }
-            rs = max(rs,r);
-            cs = max(cs,c);
+            rs = max(r,rs);
+            cs = max(c,cs);
         }
         int maxi = max(rs,cs);
-        return maxi*n - sum;
+        return maxi*n-sum;
     } 
 };
 
