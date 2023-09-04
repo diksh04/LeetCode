@@ -9,16 +9,16 @@ using namespace std;
 
 class Solution{
 public:
-    int dRow[4]={-1,0,1,0};
-    int dCol[4]={0,1,0,-1};
+    int dRow[4] = {-1,0,1,0};
+    int dCol[4] = {0,1,0,-1};
     void dfs(int r,int c,vector<vector<char>>& mat,vector<vector<int>>& vis)
     {
-        vis[r][c] = 1;
+        vis[r][c]=1;
         for(int j=0;j<4;j++)
         {
             int nrow = r + dRow[j];
             int ncol = c + dCol[j];
-            if(nrow>=0 && nrow<mat.size() && ncol>=0 && ncol<mat[0].size() && !vis[nrow][ncol] && mat[nrow][ncol]=='O')
+            if(nrow>=0 && nrow<mat.size() && ncol>=0 && ncol<mat[0].size() && mat[nrow][ncol]=='O' && !vis[nrow][ncol])
             {
                 dfs(nrow,ncol,mat,vis);
             }
@@ -28,26 +28,24 @@ public:
     {
         // code here
         vector<vector<int>>vis(n,vector<int>(m,0));
-        //top row and bottom row
         for(int j=0;j<m;j++)
         {
-            if(!vis[0][j] && mat[0][j]=='O')
+            if(mat[0][j]=='O' && !vis[0][j])
             {
                 dfs(0,j,mat,vis);
             }
-            if(!vis[n-1][j] && mat[n-1][j]=='O')
+            if(mat[n-1][j]=='O' && !vis[n-1][j])
             {
                 dfs(n-1,j,mat,vis);
             }
         }
-        // first and last col
         for(int i=0;i<n;i++)
         {
-            if(!vis[i][0] && mat[i][0]=='O')
+            if(mat[i][0]=='O' && !vis[i][0])
             {
                 dfs(i,0,mat,vis);
             }
-            if(!vis[i][m-1] && mat[i][m-1]=='O')
+            if(mat[i][m-1]=='O' && !vis[i][m-1])
             {
                 dfs(i,m-1,mat,vis);
             }
@@ -65,7 +63,6 @@ public:
         return mat;
     }
 };
-
 
 //{ Driver Code Starts.
 
