@@ -7,26 +7,45 @@ using namespace std;
 class Solution{
     public:
         //Function to merge the arrays.
+        void swapfnc(long long arr1[],long long arr2[],int idx1,int idx2)
+        {
+        	if(arr1[idx1]>arr2[idx2])
+        	{
+        		swap(arr1[idx1],arr2[idx2]);
+        	}
+        }
         void merge(long long arr1[], long long arr2[], int n, int m) 
         { 
-            // code here 
-            int left = n-1;
-            int right = 0;
-            while(left>=0 && right<m)
+            // code here
+            int len = n+m;
+            int gap = len/2 + len%2;
+            while(gap > 0)
             {
-                if(arr1[left] > arr2[right])
+                int i = 0,j = i + gap;
+                while(j < len)
                 {
-                    swap(arr1[left],arr2[right]);
-                    left--;
-                    right++;
+                    if(i< n && j>=n)
+                    {
+                        swapfnc(arr1,arr2,i,j-n);
+                    }
+                    else if(i>=n)
+                    {
+                        swapfnc(arr2,arr2,i-n,j-n);
+                    }
+                    else
+                    {
+                        swapfnc(arr1,arr1,i,j);
+                    }
+                    i++;
+                    j++;
                 }
-                else
+                
+                if(gap == 1)
                 {
                     break;
                 }
+                gap = gap/2 + gap%2;
             }
-            sort(arr1,arr1+n);
-            sort(arr2,arr2+m);
         } 
 };
 
