@@ -9,45 +9,55 @@ using namespace std;
 
 class Solution{
 public:
-    int dRow[4] = {-1,0,1,0};
-    int dCol[4] = {0,1,0,-1};
-    void dfs(int r,int c,vector<vector<char>>& mat,vector<vector<int>>& vis)
-    {
-        vis[r][c]=1;
-        for(int j=0;j<4;j++)
-        {
-            int nrow = r + dRow[j];
-            int ncol = c + dCol[j];
-            if(nrow>=0 && nrow<mat.size() && ncol>=0 && ncol<mat[0].size() && mat[nrow][ncol]=='O' && !vis[nrow][ncol])
-            {
-                dfs(nrow,ncol,mat,vis);
-            }
-        }
-    }
     vector<vector<char>> fill(int n, int m, vector<vector<char>> mat)
     {
         // code here
+        queue<pair<int,int>>q;
         vector<vector<int>>vis(n,vector<int>(m,0));
         for(int j=0;j<m;j++)
         {
-            if(mat[0][j]=='O' && !vis[0][j])
+            if(!vis[0][j] && mat[0][j]=='O')
             {
-                dfs(0,j,mat,vis);
+                vis[0][j] = 1;
+                q.push({0,j});
             }
-            if(mat[n-1][j]=='O' && !vis[n-1][j])
+            if(!vis[n-1][j] && mat[n-1][j]=='O')
             {
-                dfs(n-1,j,mat,vis);
+                vis[n-1][j] = 1;
+                q.push({n-1,j});
             }
         }
         for(int i=0;i<n;i++)
         {
-            if(mat[i][0]=='O' && !vis[i][0])
+            if(!vis[i][0] && mat[i][0]=='O')
             {
-                dfs(i,0,mat,vis);
+                vis[i][0] = 1;
+                q.push({i,0});
             }
-            if(mat[i][m-1]=='O' && !vis[i][m-1])
+            if(!vis[i][m-1] && mat[i][m-1]=='O')
             {
-                dfs(i,m-1,mat,vis);
+                vis[i][m-1] = 1;
+                q.push({i,m-1});
+            }
+        }
+        int dx[4] = {-1,0,1,0};
+        int dy[4] = {0,1,0,-1};
+        while(!q.empty())
+        {
+            auto it = q.front();
+            int r = it.first;
+            int c = it.second;
+            q.pop();
+            for(int k=0;k<4;k++)
+            {
+                int nrow = r + dx[k];
+                int ncol = c + dy[k];
+                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && !vis[nrow][ncol] && 
+                mat[nrow][ncol]=='O')
+                {
+                    vis[nrow][ncol] = 1;
+                    q.push({nrow,ncol});
+                }
             }
         }
         for(int i=0;i<n;i++)
@@ -56,7 +66,7 @@ public:
             {
                 if(!vis[i][j] && mat[i][j]=='O')
                 {
-                    mat[i][j]='X';
+                    mat[i][j] = 'X';
                 }
             }
         }
