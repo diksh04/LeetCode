@@ -9,7 +9,7 @@ using namespace std;
 
 class Solution{
     public:
-    vector<int>topologicalSort(int K,vector<int> adj[])
+    vector<int>topologicalSort(int K,vector<vector<int>> &adj)
     {
         vector<int>indegree(K,0);
         for(int i=0;i<K;i++)
@@ -46,7 +46,7 @@ class Solution{
     }
     string findOrder(string dict[], int N, int K) {
         //code here
-        vector<int>adj[K];
+        vector<vector<int>>adj(K);
         for(int i=0;i<N-1;i++)
         {
             string s1 = dict[i];
