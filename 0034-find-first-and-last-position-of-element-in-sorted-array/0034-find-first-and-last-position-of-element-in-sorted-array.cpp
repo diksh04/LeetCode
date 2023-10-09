@@ -1,8 +1,8 @@
 class Solution {
 public:
     vector<int> searchRange(vector<int>& nums, int target) {
-        int low = 0,high = nums.size()-1;
         int firstIdx = -1,lastIdx = -1;
+        int low = 0,high = nums.size()-1;
         while(low<=high)
         {
             int mid = low + (high-low)/2;
@@ -41,3 +41,5 @@ public:
         return {firstIdx,lastIdx};
     }
 };
+// 5 7 7 8 8 10
+//
