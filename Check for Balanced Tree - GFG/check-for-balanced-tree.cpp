@@ -111,15 +111,9 @@ class Solution{
             return 0;
         }
         int lh = helper(root->left);
-        if(lh==-1)
-        {
-            return -1;
-        }
+        if(lh==-1)return -1;
         int rh = helper(root->right);
-        if(rh==-1)
-        {
-            return -1;
-        }
+        if(rh ==-1) return -1;
         if(abs(lh-rh)>1)
         {
             return -1;
@@ -129,17 +123,12 @@ class Solution{
     bool isBalanced(Node *root)
     {
         //  Your Code here
-        if(root==NULL)
-        {
-            return true;
-        }
         if(helper(root)==-1)
         {
             return false;
         }
         return true;
     }
-    
 };
 
 
