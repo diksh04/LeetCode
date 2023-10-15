@@ -10,43 +10,48 @@ class Solution {
   public:
     int findCity(int n, int m, vector<vector<int>>& edges,
                  int threshold) {
-        vector<vector<int>>dist(n,vector<int>(n,INT_MAX));
+        vector<pair<int,int>>adj[n];
         for(auto it:edges)
         {
-            dist[it[0]][it[1]] = it[2];
-            dist[it[1]][it[0]] = it[2];
+            adj[it[0]].push_back({it[1],it[2]});
+            adj[it[1]].push_back({it[0],it[2]});
         }
-        for(int i=0;i<n;i++) dist[i][i] = 0;
-        for(int k=0;k<n;k++)
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
+        int cityNo = 0,cntCity = n;
+        for(int i=0;i<n;i++)
         {
-            for(int i=0;i<n;i++)
+            vector<int>dist(n,1e9);
+            dist[i] = 0;
+            pq.push({0,i});
+            while(!pq.empty())
             {
-                for(int j=0;j<n;j++)
+                auto it = pq.top();
+                pq.pop();
+                int dis = it.first;
+                int node = it.second;
+                for(auto it:adj[node])
                 {
-                    if(dist[i][k]==INT_MAX || dist[k][j] == INT_MAX)
+                    int adjNode = it.first;
+                    int cost = it.second;
+                    if(cost + dis < dist[adjNode])
                     {
-                        continue;
+                        dist[adjNode] = cost + dis;
+                        pq.push({dist[adjNode],adjNode});
                     }
-                    dist[i][j] = min(dist[i][j],dist[i][k]+dist[k][j]);
                 }
             }
-        }
-        int cntCity = n;
-        int cityNo = -1;
-        for(int city=0;city<n;city++)
-        {
-            int cnt = 0;
-            for(int adjCity=0;adjCity<n;adjCity++)
+            int count = 0;
+            for(int j=0;j<n;j++)
             {
-                if(dist[city][adjCity] <=threshold)
+                if(dist[j]<=threshold)
                 {
-                    cnt++;
+                    count++;
                 }
             }
-            if(cnt<=cntCity) 
+            if(count<=cntCity)
             {
-                cntCity = cnt;
-                cityNo = city;
+                cntCity = count;
+                cityNo = i;
             }
         }
         return cityNo;
