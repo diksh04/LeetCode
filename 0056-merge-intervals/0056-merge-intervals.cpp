@@ -4,34 +4,18 @@ public:
         vector<vector<int>>ans;
         int n = intervals.size();
         sort(intervals.begin(),intervals.end());
-        stack<vector<int>>st;
-        st.push(intervals[0]);
-        for(int i=1;i<intervals.size();i++)
+        for(int i=0;i<intervals.size();i++)
         {
-            vector<int>lm = st.top();
-            vector<int>cm = intervals[i];
-            if(lm[1]>=cm[0])
+            if(ans.empty() || intervals[i][0] > ans.back()[1])
             {
-                st.pop();
-                vector<int>temp = {lm[0],max(lm[1],cm[1])};
-                st.push(temp);
+                ans.push_back(intervals[i]);
             }
             else
             {
-                st.push(cm);
+                ans.back()[1] = max(ans.back()[1],intervals[i][1]); 
             }
         }
-        stack<vector<int>>stck;
-        while(!st.empty())
-        {
-            stck.push(st.top());
-            st.pop();
-        }
-        while(!stck.empty())
-        {
-            ans.push_back(stck.top());
-            stck.pop();
-        }
+        
         return ans;
     }
 };
