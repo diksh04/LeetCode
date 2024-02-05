@@ -1,14 +1,14 @@
 class Solution {
 public:
     int firstUniqChar(string s) {
-        unordered_map<char,int>umap;
+        vector<int>hash(26,0);
         for(auto it:s)
         {
-            umap[it]++;
+            hash[it-'a']++;
         }
         for(int i=0;i<s.size();i++)
         {
-            if(umap[s[i]]==1)
+            if(hash[s[i]-'a']==1)
             {
                 return i;
             }
