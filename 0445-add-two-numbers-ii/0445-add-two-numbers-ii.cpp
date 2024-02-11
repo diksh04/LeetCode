@@ -10,48 +10,41 @@
  */
 class Solution {
 public:
-    ListNode* reverseList(ListNode* head) {
+    ListNode* reverseList(ListNode* head)
+    {
+        ListNode* curr = head;
         ListNode* prev = NULL;
-
-        while(head) {
-            ListNode* nxt = head->next;
-            head->next = prev;
-            prev = head;
-            head = nxt;
+        while(curr!=NULL)
+        {
+            ListNode* temp = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = temp;
         }
         return prev;
     }
-
-    ListNode* Helper(ListNode* l1, ListNode* l2) {
-        ListNode* dummyHead = new ListNode(0);
-        ListNode* tail = dummyHead;
-        int carry = 0;
-
-        while (l1 != nullptr || l2 != nullptr || carry != 0) {
-            int digit1 = (l1 != nullptr) ? l1->val : 0;
-            int digit2 = (l2 != nullptr) ? l2->val : 0;
-
-            int sum = digit1 + digit2 + carry;
-            int digit = sum % 10;
-            carry = sum / 10;
-
-            ListNode* newNode = new ListNode(digit);
-            tail->next = newNode;
-            tail = tail->next;
-
-            l1 = (l1 != nullptr) ? l1->next : nullptr;
-            l2 = (l2 != nullptr) ? l2->next : nullptr;
-        }
-
-        ListNode* result = dummyHead->next;
-        delete dummyHead;
-        return result;
-    }
-
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        l1 = reverseList(l1);
-        l2 = reverseList(l2);
-        ListNode* ans = Helper(l1, l2);
-        return reverseList(ans);
+        if(l1==NULL) return l2;
+        if(l2==NULL) return l1;
+        ListNode* t1 = reverseList(l1);
+        ListNode* t2 = reverseList(l2);
+        int carry = 0;
+        ListNode* dummy = new ListNode(-1);
+        ListNode* ptr = dummy;
+        while(t1!=NULL || t2!=NULL || carry!=0)
+        {
+            int sum = 0;
+            if(t1) sum+=t1->val;
+            if(t2) sum+=t2->val;
+            sum+=carry;
+            ListNode* newNode = new ListNode(sum%10);
+            carry = sum/10;
+            ptr->next = newNode;
+            ptr = ptr->next;
+            if(t1) t1 = t1->next;
+            if(t2) t2 = t2->next;
+        }
+        ListNode* head = reverseList(dummy->next);
+        return head;
     }
 };
