@@ -1,33 +1,30 @@
 class Solution {
 public:
-    vector<string>ans;
-    void helper(string s,int idx,string temp)
+    void helper(int idx,string &s,string output,vector<string>& ans)
     {
         if(idx==s.size())
         {
-            ans.push_back(temp);
+            ans.push_back(output);
             return;
         }
-        if(isdigit(s[idx]))
+        if(!isalpha(s[idx]))
         {
-            temp.push_back(s[idx]);
-            helper(s,idx+1,temp);
+            output.push_back(s[idx]);
+            helper(idx+1,s,output,ans);
         }
         else
         {
-            //case 1
-            string s1 = temp;
-            s1.push_back(tolower(s[idx]));
-            helper(s,idx+1,s1);
-            
-            //case2
-            string s2 = temp;
-            s2.push_back(toupper(s[idx]));
-            helper(s,idx+1,s2);
+            char ch1 = tolower(s[idx]);
+            char ch2 = toupper(s[idx]);
+            helper(idx+1,s,output+ch1,ans);
+            helper(idx+1,s,output+ch2,ans);
         }
+        return;
     }
     vector<string> letterCasePermutation(string s) {
-        helper(s,0,"");
+        vector<string>ans;
+        string output;
+        helper(0,s,output,ans);
         return ans;
     }
 };
