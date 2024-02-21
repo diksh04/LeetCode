@@ -1,6 +1,6 @@
 class Solution {
 public:
-    void helper(int idx,string &s,string output,vector<string>& ans)
+    void helper(int idx,string s,string output,vector<string>& ans)
     {
         if(idx==s.size())
         {
@@ -9,8 +9,7 @@ public:
         }
         if(!isalpha(s[idx]))
         {
-            output.push_back(s[idx]);
-            helper(idx+1,s,output,ans);
+            helper(idx+1,s,output+s[idx],ans);
         }
         else
         {
@@ -19,7 +18,6 @@ public:
             helper(idx+1,s,output+ch1,ans);
             helper(idx+1,s,output+ch2,ans);
         }
-        return;
     }
     vector<string> letterCasePermutation(string s) {
         vector<string>ans;
