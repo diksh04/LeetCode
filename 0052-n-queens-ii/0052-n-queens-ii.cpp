@@ -27,10 +27,11 @@ public:
         }
         return true;
     }
-    int helper(int row,vector<string>& board,int n)
+    void helper(int row,vector<string>& board,int n,int &cnt)
     {
         if(row == n){
-            return 1;
+            cnt++;
+            return;
         }
         int count = 0;
         for(int col = 0;col<n;col++)
@@ -38,11 +39,10 @@ public:
             if(isSafe(row,col,board,n))
             {
                 board[row][col]='Q';
-                count+=helper(row+1,board,n);
+                helper(row+1,board,n,cnt);
                 board[row][col] = '.';
             }
         }
-        return count;
     }
     int totalNQueens(int n) {
         vector<string>board(n);
@@ -51,6 +51,8 @@ public:
         {
             board[i] = s;
         }
-        return helper(0,board,n);
+        int cnt = 0;
+        helper(0,board,n,cnt);
+        return cnt;
     }
 };
