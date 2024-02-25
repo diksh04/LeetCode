@@ -1,37 +1,24 @@
 class Solution {
 public:
-    bool helper(int idx,vector<int>& nums,int target,vector<vector<int>>& dp)
+    bool helper(int idx,int target,vector<int>& nums,vector<vector<int>>& dp)
     {
-        if(target==0)
-        {
-            return true;
-        }
-        if(idx==0)
-        {
-            return nums[0]==target;
-        }
-        if(dp[idx][target]!=-1)
-        {
-            return dp[idx][target];
-        }
-        bool notpick = helper(idx-1,nums,target,dp);
+        if(target==0) return true;
+        if(idx==0) return nums[0] == target;
+        if(dp[idx][target]!=-1) return dp[idx][target];
+        bool notpick = helper(idx-1,target,nums,dp);
         bool pick = false;
         if(nums[idx]<=target)
         {
-            pick = helper(idx-1,nums,target-nums[idx],dp);
+            pick = helper(idx-1,target-nums[idx],nums,dp);
         }
-        return dp[idx][target] = pick | notpick;
+        return dp[idx][target] = notpick | pick;
     }
     bool canPartition(vector<int>& nums) {
+        int tsum = accumulate(nums.begin(),nums.end(),0);
+        if(tsum%2!=0) return false;
+        int sum = tsum/2;
         int n = nums.size();
-        int sum = accumulate(nums.begin(),nums.end(),0);
-        // cout<<sum<<endl;
-        if(sum%2!=0)
-        {
-            return false;
-        }
-        int target = sum/2;
-        vector<vector<int>>dp(n,vector<int>(target+1,-1));
-        return helper(n-1,nums,target,dp);
+        vector<vector<int>>dp(n,vector<int>(sum+1,-1));
+        return helper(n-1,sum,nums,dp);
     }
 };
