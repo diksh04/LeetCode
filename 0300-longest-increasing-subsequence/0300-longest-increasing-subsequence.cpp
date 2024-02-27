@@ -1,24 +1,20 @@
 class Solution {
 public:
-    
     int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
-        //we can't store at -1 we will coordinate shift         
-        vector<int>next(n+1,0),curr(n+1,0);
-        for(int idx=n-1;idx>=0;idx--)
+        vector<int>dp(n,1);
+        int maxi = 1;
+        for(int idx=0;idx<n;idx++)
         {
-            for(int prevIdx=idx-1;prevIdx>=-1;prevIdx--)
+            for(int prev=0;prev<idx;prev++)
             {
-                int notTake = 0 + next[prevIdx+1];
-                int take = 0;
-                if(prevIdx==-1 || nums[idx]>nums[prevIdx])
+                if(nums[prev]<nums[idx])
                 {
-                    take = 1 + next[idx+1];
+                    dp[idx] = max(1+dp[prev],dp[idx]);
                 }
-                curr[prevIdx+1] = max(take,notTake);
             }
-            next = curr;
+            maxi = max(maxi,dp[idx]);
         }
-        return next[0];
+        return  maxi;
     }
 };
