@@ -2,8 +2,8 @@ class Solution {
 public:
     int maxProfit(vector<int>& prices) {
         int n = prices.size();
-        vector<vector<long>>dp(n+1,vector<long>(2,0));
-        dp[n][0] = dp[n][1] = 0;
+        vector<long>front(2,0),curr(2,0);
+        front[0] = front[1] = 0;
         for(int idx=n-1;idx>=0;idx--)
         {
             for(int buy=0;buy<=1;buy++)
@@ -11,20 +11,21 @@ public:
                 long profit = 0;
                 if(buy){
                     //buy
-                    int webuy = -prices[idx] + dp[idx+1][0];
-                    int notbuy = 0 + dp[idx+1][1];
+                    int webuy = -prices[idx] + front[0];
+                    int notbuy = 0 + front[1];
                     profit = max(webuy,notbuy);
                 }
                 else
                 {
                     //sell
-                    int wesell = prices[idx] + dp[idx+1][1];
-                    int notsell = 0 + dp[idx+1][0];
+                    int wesell = prices[idx] + front[1];
+                    int notsell = 0 + front[0];
                     profit = max(wesell,notsell);
                 }
-                dp[idx][buy] = profit;
+                curr[buy] = profit;
             }
+            front = curr;
         }
-        return dp[0][1];
+        return front[1];
     }
 };
