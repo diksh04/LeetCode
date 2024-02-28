@@ -31,12 +31,10 @@ public:
                 if(t->right)
                 {
                     q.push(t->right);
-                    val = t->right->val;
                 }
                 if(t->left)
                 {
                     q.push(t->left);
-                    val = t->left->val;
                 }
             }
         }
