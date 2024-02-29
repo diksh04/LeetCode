@@ -1,33 +1,33 @@
 class Solution {
 public:
-    int findNumberOfLIS(vector<int>& arr) {
-        int n = arr.size();
-        vector<int>dp1(n,1),count(n,1);
+    int findNumberOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<int>dp(n,1),cnt(n,1);
         int maxi = 1;
-        for(int i=0;i<n;i++)
+        for(int idx=1;idx<n;idx++)
         {
-            for(int prev=0;prev<i;prev++)
+            for(int prev=0;prev<idx;prev++)
             {
-                if(arr[prev]<arr[i] && 1+dp1[prev] > dp1[i])
+                if(nums[idx]>nums[prev] && 1+dp[prev] > dp[idx])
                 {
-                    dp1[i] = 1+dp1[prev];
-                    count[i] = count[prev];
+                    dp[idx] = 1 + dp[prev];
+                    cnt[idx] = cnt[prev];
                 }
-                else if(arr[prev] < arr[i] && 1+dp1[prev]==dp1[i])
+                else if(nums[idx]>nums[prev] && 1+dp[prev]==dp[idx])
                 {
-                    count[i]+=count[prev];
+                    cnt[idx]+=cnt[prev];
                 }
             }
-            maxi = max(maxi,dp1[i]);
+            maxi = max(maxi,dp[idx]);
         }
-        int nos = 0;//number of LIS
+        int count = 0;
         for(int i=0;i<n;i++)
         {
-            if(dp1[i]==maxi)
+            if(dp[i]==maxi)
             {
-                nos+=count[i];
+                count+=cnt[i];
             }
         }
-        return nos;
+        return count;
     }
 };
