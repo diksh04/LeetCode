@@ -55,6 +55,7 @@ public:
                     if(temp[i]<=temp[i+1]) return false;
                 }
             }
+            temp.empty();
             level++;
         }
         return true;
