@@ -1,21 +1,22 @@
 class Solution {
 public:
-    bool isPalindrome(string s,int left,int right)
+    bool isPalindrome(string s,int low,int high)
     {
-        while(left<=right)
+        while(low<high)
         {
-            if(s[left]!=s[right])
+            if(s[low]!=s[high])
             {
                 return false;
             }
-            left++;
-            right--;
+            low++;
+            high--;
         }
         return true;
     }
-    void helper(string s,int idx,vector<string>& temp,vector<vector<string>>& ans)
+    void helper(int idx,string s,vector<string>& temp,vector<vector<string>>& ans
+               )
     {
-        if(idx==s.size())
+        if(idx==s.size()) 
         {
             ans.push_back(temp);
             return;
@@ -25,15 +26,16 @@ public:
             if(isPalindrome(s,idx,i))
             {
                 temp.push_back(s.substr(idx,i-idx+1));
-                helper(s,i+1,temp,ans);
+                helper(i+1,s,temp,ans);
                 temp.pop_back();
             }
         }
     }
     vector<vector<string>> partition(string s) {
+        int n = s.size();
         vector<vector<string>>ans;
         vector<string>temp;
-        helper(s,0,temp,ans);
+        helper(0,s,temp,ans);
         return ans;
     }
 };
