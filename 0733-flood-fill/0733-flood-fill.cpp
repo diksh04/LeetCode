@@ -1,21 +1,20 @@
 class Solution {
 public:
-    void helper(vector<vector<int>>& image,int sr,int sc,int initColor,int color)
+    void dfs(int r,int c,vector<vector<int>>& image,int initColor,int color)
     {
-        if(sr<0 || sc<0 || sr==image.size() || sc==image[0].size() || image[sr][sc]!=initColor || image[sr][sc] == color)
+        if(r<0 || r>=image.size() || c<0 || c>=image[0].size() || image[r][c]==color || image[r][c]!=initColor)
         {
             return;
         }
-        image[sr][sc] = color;
-        helper(image,sr-1,sc,initColor,color);
-        helper(image,sr,sc-1,initColor,color);
-        helper(image,sr+1,sc,initColor,color);
-        helper(image,sr,sc+1,initColor,color);
+        image[r][c] = color;
+        dfs(r-1,c,image,initColor,color);
+        dfs(r,c-1,image,initColor,color);
+        dfs(r+1,c,image,initColor,color);
+        dfs(r,c+1,image,initColor,color);
     }
     vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
-        int n = image.size();
         int initColor = image[sr][sc];
-        helper(image,sr,sc,initColor,color);
+        dfs(sr,sc,image,initColor,color);
         return image;
     }
 };
