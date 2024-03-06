@@ -1,38 +1,34 @@
 class Solution {
 public:
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
-        queue<pair<pair<int,int>,int>>q;
-        q.push({{0,0},1});
-        
-        if(grid[0][0]==1)return -1;
-        
-        if(grid[0][0]==0 && grid.size()==1 && grid[0].size()==1)return 1;
-        
-        vector<vector<bool>>visited(grid.size(),vector<bool>(grid.size(),false));
-        visited[0][0] = true;
+        int n = grid.size(),m = grid[0].size();
+        if(grid[0][0]!=0 || grid[n-1][m-1]!=0){
+            return -1;
+        }
+        if(grid[0][0] == 0 && n==1 & m==1) return 1;
+        vector<vector<int>>dist(n,vector<int>(n,1e7));
+        dist[0][0] = 0;
+        queue<pair<int,pair<int,int>>>q;
+        q.push({1,{0,0}});
+        int dx[8] = {0,1,-1,0,1,-1,1,-1};
+        int dy[8] = {1,0,0,-1,1,1,-1,-1};
         while(!q.empty())
         {
-            int x = q.front().first.first;
-            int y = q.front().first.second;
-            int lengthOfPath = q.front().second;
+            auto it = q.front();
             q.pop();
-            
-            vector<pair<int,int>>neighbours = {{0,1}, {0,-1}, {1,0}, {-1,0},{1,1}, {-1,-1}, {1,-1}, {-1,1}};
-            
-            for(pair<int,int>neighbour: neighbours)
+            int d = it.first;
+            int r = it.second.first;
+            int c = it.second.second;
+            for(int k=0;k<8;k++)
             {
-                int newx = neighbour.first + x;
-                int newy = neighbour.second+ y;
-                
-         if(newx>=0 && newy>=0 && newx<grid.size() && newy<grid[0].size() && grid[newx][newy]==0 && !visited[newx][newy]){
-
-                    q.push({{newx,newy},lengthOfPath+1});
-                    visited[newx][newy] = true;
-                    
-                    if(newx==grid.size()-1 && newy==grid[0].size()-1)
-                     return lengthOfPath+1;
-           
-                }      
+                    int nRow = dx[k] + r;
+                    int nCol = dy[k] + c;
+                    if(nRow>=0 && nRow<n && nCol>=0 && nCol<m && grid[nRow][nCol]==0 && d+1<dist[nRow][nCol])
+                    {
+                        dist[nRow][nCol] = d + 1;
+                        if(nRow==n-1 && nCol==n-1) return d + 1;
+                        q.push({d+1,{nRow,nCol}});
+                    }
             }
         }
         return -1;
