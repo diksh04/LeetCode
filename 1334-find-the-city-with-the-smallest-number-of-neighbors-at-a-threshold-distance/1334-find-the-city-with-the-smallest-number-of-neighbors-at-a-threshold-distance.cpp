@@ -1,38 +1,61 @@
 class Solution {
 public:
-    int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
-        vector<vector<int>>dist(n,vector<int>(n,INT_MAX));
-        for(auto it:edges){
-            dist[it[0]][it[1]] = it[2];
-            dist[it[1]][it[0]] = it[2];
-        }
-        for(int i=0;i<n;i++) dist[i][i] = 0;
-        for(int k=0;k<n;k++)
+    void numberOfCities(int n,int src,vector<vector<pair<int,int>>>& adj,int distanceThreshold,vector<int> &citiesCount)
+    {
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
+        vector<int>dist(n,INT_MAX);
+        dist[src] = 0;
+        pq.push({0,src});//distance source
+        while(!pq.empty())
         {
-            for(int i=0;i<n;i++)
+            auto it = pq.top();
+            pq.pop();
+            int d = it.first;
+            int node = it.second;
+            for(auto it:adj[node])
             {
-                for(int j=0;j<n;j++)
+                int adjNode = it.first;
+                int wt = it.second;
+                if(d + wt < dist[adjNode])
                 {
-                    if(dist[i][k]==INT_MAX || dist[k][j]==INT_MAX) continue;
-                    dist[i][j] = min(dist[i][j],dist[i][k]+dist[k][j]);
+                    dist[adjNode] = d + wt;
+                    pq.push({d+wt,adjNode});
                 }
             }
         }
-        int cntCity=n,cityNo=-1;
-        for(int city=0;city<n;city++)
+        int cnt = 0;
+        for(int i=0;i<n;i++)
         {
-            int cnt = 0;
-            for(int adjCity=0;adjCity<n;adjCity++)
+            if(i!=src && dist[i]<=distanceThreshold)
             {
-                    if(dist[city][adjCity]<=distanceThreshold)
-                    {
-                        cnt++;
-                    }
+                cnt++;
             }
-            if(cnt <= cntCity)
+        }
+        citiesCount.push_back(cnt);
+    }
+    int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
+        vector<vector<pair<int,int>>>adj(n);
+        for(auto it:edges)
+        {
+            int u = it[0];
+            int v = it[1];
+            int wt = it[2];
+            adj[u].push_back({v,wt});
+            adj[v].push_back({u,wt});
+        }
+        vector<int>citiesCount;
+        for(int i=0;i<n;i++)
+        {
+            numberOfCities(n,i,adj,distanceThreshold,citiesCount);
+        }
+        int miniCities = n;
+        int cityNo = -1;
+        for(int i=0;i<citiesCount.size();i++)
+        {
+            if(citiesCount[i]<=miniCities)
             {
-                cntCity = cnt;
-                cityNo = city;
+                miniCities = citiesCount[i];
+                cityNo = i;
             }
         }
         return cityNo;
