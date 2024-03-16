@@ -13,35 +13,29 @@ class Solution {
 public:
     int leftHeight(TreeNode* root)
     {
-        int height = 0;
+        int cnt = 0;
         while(root)
         {
+            cnt++;
             root = root->left;
-            height++;
         }
-        return height;
+        return cnt;
     }
     int rightHeight(TreeNode* root)
     {
-        int height = 0;
+        int cnt = 0;
         while(root)
         {
+            cnt++;
             root = root->right;
-            height++;
         }
-        return height;
+        return cnt;
     }
     int countNodes(TreeNode* root) {
-        if(root==NULL)
-        {
-            return 0;
-        }
+        if(root==NULL) return 0;
         int lh = leftHeight(root);
         int rh = rightHeight(root);
-        if(lh==rh)
-        {
-            return pow(2,lh)-1;//property of full binary trees
-        }
+        if(lh == rh) return pow(2,lh)-1;
         return 1 + countNodes(root->left) + countNodes(root->right);
     }
 };
