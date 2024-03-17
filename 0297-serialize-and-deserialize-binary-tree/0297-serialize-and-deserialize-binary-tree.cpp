@@ -12,52 +12,40 @@ public:
 
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
-        if(!root)
-        {
-            return "";
-        }
         string s = "";
-        queue<TreeNode*>q;
-        q.push(root);
-        while(!q.empty())
-        {
-            TreeNode* curNode = q.front();
-            q.pop();
-            if(curNode == NULL)
-            {
-                s.append("#,");
-            }
-            else
-            {
-                s.append(to_string(curNode->val)+',');
-            }
-            if(curNode!=NULL)
-            {
-                q.push(curNode->left);
-                q.push(curNode->right);
-            }
-        }
-        // cout<<s;
-        return s;
-    }
-
-    // Decodes your encoded data to tree.
-    TreeNode* deserialize(string data) {
-        if(data.size()==0)
-        {
-            return NULL;
-        }
-        stringstream s(data);//stringstream allows to be iterated over as objects
-        string str;
-        getline(s,str,',');//gives the first value in string
-        TreeNode* root = new TreeNode(stoi(str));
+        if(!root) return "";
         queue<TreeNode*>q;
         q.push(root);
         while(!q.empty())
         {
             TreeNode* node = q.front();
             q.pop();
-            getline(s,str,',');//used to get next value for left node
+            if(node==NULL) s+="#,";
+            else s+=(to_string(node->val)+",");
+            if(node!=NULL)
+            {
+                q.push(node->left);
+                q.push(node->right);
+            }
+        }
+        cout<<s<<endl;
+        return s;
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        if(data.size()==0) return NULL;
+        stringstream s(data);
+        string str;
+        getline(s,str,',');
+        queue<TreeNode*>q;
+        TreeNode* root = new TreeNode(stoi(str));
+        q.push(root);
+        while(!q.empty())
+        {
+            TreeNode* node = q.front();
+            q.pop();
+            getline(s,str,',');
             if(str=="#")
             {
                 node->left = NULL;
@@ -68,7 +56,7 @@ public:
                 node->left = leftNode;
                 q.push(leftNode);
             }
-            getline(s,str,',');//used to get next value for right node
+            getline(s,str,',');
             if(str=="#")
             {
                 node->right = NULL;
