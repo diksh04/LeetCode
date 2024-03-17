@@ -12,26 +12,33 @@
 class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
-        //iterative pre order traversal
-        vector<int>ans;
-        stack<TreeNode*>st;
-        if(root==NULL)
+     vector<int>ans;
+        TreeNode* curr = root;
+        while(curr)
         {
-            return ans;
-        }
-        st.push(root);
-        while(!st.empty())
-        {
-            root = st.top();
-            st.pop();
-            ans.push_back(root->val);
-            if(root->right)
+            if(curr->left==NULL)
             {
-                st.push(root->right);
+                ans.push_back(curr->val);
+                curr =curr->right;
             }
-            if(root->left)
+            else
             {
-                st.push(root->left);
+                TreeNode* prev = curr->left;
+                while(prev->right && prev->right!=curr)
+                {
+                    prev = prev->right;
+                }
+                if(prev->right==NULL)
+                {
+                    prev->right = curr;
+                    ans.push_back(curr->val);
+                    curr = curr->left;
+                }
+                else
+                {
+                    prev->right = NULL;
+                    curr =curr->right;
+                }       
             }
         }
         return ans;
