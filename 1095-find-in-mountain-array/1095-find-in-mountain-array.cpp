@@ -8,27 +8,27 @@
  * };
  */
 
-// find peak index
-// run BS from 0 to peak index to find target idx
-// if target not found then run reverse BS on array from idx+1 to n-1
-
 class Solution {
 public:
-    int peakIndexInMountainArray(MountainArray &mountainArr)
+    // 1,2,3,4,5,3,1
+    // 0 1 2 3 4 5 6
+    //         l   h   
+    int findPeak(MountainArray &mountainArr)
     {
-        int n = mountainArr.length();
-        int low = 0,high = n-1;
+        int low = 0,high = mountainArr.length()-1;
         while(low<=high)
         {
             int mid = low + (high-low)/2;
-            if(mountainArr.get(mid)<mountainArr.get(mid+1))
+            // if(mountainArr.get(mid) > mountainArr.get(mid-1) && mountainArr.get(mid) > mountainArr.get(mid+1))
+            // {
+            //     return mid;
+            // }
+            if(mountainArr.get(mid) < mountainArr.get(mid+1))
             {
                 low = mid+1;
             }
             else
-            {
                 high = mid-1;
-            }
         }
         return low;
     }
@@ -37,11 +37,8 @@ public:
         while(low<=high)
         {
             int mid = low + (high-low)/2;
-            if(mountainArr.get(mid)==target)
-            {
-                return mid;
-            }
-            else if(mountainArr.get(mid)>target)
+            if(mountainArr.get(mid) == target) return mid;
+            if(mountainArr.get(mid) > target)
             {
                 high = mid-1;
             }
@@ -57,30 +54,28 @@ public:
         while(low<=high)
         {
             int mid = low + (high-low)/2;
-            if(mountainArr.get(mid)==target)
+            if(mountainArr.get(mid) == target) return mid;
+            if(mountainArr.get(mid) < target)
             {
-                return mid;
-            }
-            else if(mountainArr.get(mid)>target)
-            {
-                low = mid+1;
+                high = mid-1;
             }
             else
             {
-                high = mid-1;
+                low = mid+1;
             }
         }
         return -1;
     }
     int findInMountainArray(int target, MountainArray &mountainArr) {
+//         since it is mountain arary we will try to find out peak in mountain then we will find target between 0 to peak and peak to n-1
         int n = mountainArr.length();
-        int idx = peakIndexInMountainArray(mountainArr);//peak index
-        int result_idx = binarySearch(mountainArr,0,idx,target);
-        if(result_idx!=-1)
+        int idx = findPeak(mountainArr);
+        int result = binarySearch(mountainArr,0,idx,target);
+        if(result!=-1)
         {
-            return result_idx;
+            return result;
         }
-        result_idx = revBinarySearch(mountainArr,idx+1,n-1,target);
-        return result_idx;
+        result = revBinarySearch(mountainArr,idx+1,n-1,target);
+        return result;
     }
 };
