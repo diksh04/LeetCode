@@ -1,53 +1,53 @@
 class MyQueue {
 public:
-    stack<int>mainS,helperS;
+    stack<int>st1,st2;
     MyQueue() {
         
     }
     
     void push(int x) {
-        mainS.push(x);
+        st1.push(x);
     }
     
     int pop() {
-        while(mainS.size()>1)
+        while(st1.size()>1)
         {
-            int val = mainS.top();
-            mainS.pop();
-            helperS.push(val);
+            int val = st1.top();
+            st1.pop();
+            st2.push(val);
         }
-        int rem = mainS.top();
-        mainS.pop();
-        while(helperS.size()>0)
+        int elm = st1.top();
+        st1.pop();
+        while(!st2.empty())
         {
-            int val = helperS.top();
-            helperS.pop();
-            mainS.push(val);
+            int val = st2.top();
+            st2.pop();
+            st1.push(val);
         }
-        return rem;
+        return elm;
     }
     
     int peek() {
-        while(mainS.size()>1)
+        while(st1.size()>1)
         {
-            int val = mainS.top();
-            mainS.pop();
-            helperS.push(val);
+            int val = st1.top();
+            st1.pop();
+            st2.push(val);
         }
-        int rem = mainS.top();
-        mainS.pop();
-        helperS.push(rem);
-        while(helperS.size()>0)
+        int elm = st1.top();
+        st1.pop();
+        st2.push(elm);
+        while(!st2.empty())
         {
-            int val = helperS.top();
-            helperS.pop();
-            mainS.push(val);
+            int val = st2.top();
+            st2.pop();
+            st1.push(val);
         }
-        return rem;
+        return elm;
     }
     
     bool empty() {
-        return mainS.size()==0;
+        return st1.empty();
     }
 };
 
