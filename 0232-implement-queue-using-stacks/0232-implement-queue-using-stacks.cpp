@@ -6,44 +6,27 @@ public:
     }
     
     void push(int x) {
+        while(!st1.empty())
+        {
+            st2.push(st1.top());
+            st1.pop();
+        }
         st1.push(x);
+        while(!st2.empty())
+        {
+            st1.push(st2.top());
+            st2.pop();
+        }
     }
     
     int pop() {
-        while(st1.size()>1)
-        {
-            int val = st1.top();
-            st1.pop();
-            st2.push(val);
-        }
-        int elm = st1.top();
+        int val = st1.top();
         st1.pop();
-        while(!st2.empty())
-        {
-            int val = st2.top();
-            st2.pop();
-            st1.push(val);
-        }
-        return elm;
+        return val;
     }
     
     int peek() {
-        while(st1.size()>1)
-        {
-            int val = st1.top();
-            st1.pop();
-            st2.push(val);
-        }
-        int elm = st1.top();
-        st1.pop();
-        st2.push(elm);
-        while(!st2.empty())
-        {
-            int val = st2.top();
-            st2.pop();
-            st1.push(val);
-        }
-        return elm;
+        return st1.top();
     }
     
     bool empty() {
