@@ -4,7 +4,7 @@ public:
         if(s.size()!=goal.size()) return false;
         
         string temp = s+s;
-        if(temp.find(goal)!=string::npos){
+        if(temp.find(goal)!=-1){
             return true;
         }
         return false;
