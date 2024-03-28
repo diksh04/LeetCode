@@ -4,6 +4,7 @@ public:
     // 2) if the new elem is greater that deque.back pop it
 //     3) now push the current idx in deque
 //     4) if(i>=k-1) push deq.front() into result array for that window
+    // 5)monotonic decreasing (storing in decreasing order)
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
         int n = nums.size();
         vector<int>ans;
