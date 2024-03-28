@@ -1,43 +1,44 @@
 class LRUCache {
 public:
-    int capacity;
-    queue<int>used_history;
-    unordered_map<int,int>q_counter;
-    unordered_map<int,int>dict;
+    list<int>dll;//doubly linked list
+    map<int,pair<list<int>::iterator,int>>mp;//key -> {address,value}
+    int n;
     LRUCache(int capacity) {
-        this->capacity = capacity;
+        n = capacity; 
+    }
+    
+    void makeRecentlyUsed(int key)
+    {
+        dll.erase(mp[key].first);
+        dll.push_front(key);//add to front
+        mp[key].first = dll.begin();//store new address
     }
     
     int get(int key) {
-        if(dict.count(key))
-        {
-            used_history.push(key);
-            q_counter[key]++;
-            return dict[key];
-        }
-        return -1;
+        if(mp.find(key)==mp.end()) return -1;
+        
+        makeRecentlyUsed(key);
+        return mp[key].second;
     }
-    void remove_lru()
-    {
-        while(!used_history.empty())
-        {
-            int cur = used_history.front();
-            used_history.pop();
-            q_counter[cur]--;
-            if(q_counter[cur]==0)
-            {
-                dict.erase(cur);
-                break;
-            }
-        }
-    }
+    
     void put(int key, int value) {
-        used_history.push(key);
-        q_counter[key]++;
-        dict[key] = value;
-        if(dict.size() > this->capacity)
+        if(mp.find(key)!=mp.end())
         {
-            remove_lru();
+            mp[key].second = value;
+            makeRecentlyUsed(key);
+        }
+        else 
+        {
+            dll.push_front(key);
+            mp[key] = {dll.begin(),value};
+            n--;
+        }
+        if(n<0)
+        {
+            int keyToDelete = dll.back();
+            mp.erase(keyToDelete);
+            dll.pop_back();
+            n++;
         }
     }
 };
