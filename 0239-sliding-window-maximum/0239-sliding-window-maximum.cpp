@@ -1,40 +1,25 @@
 class Solution {
 public:
+//     1) when a new element comes,make space for it remove index which are less than equal to i-k
+    // 2) if the new elem is greater that deque.back pop it
+//     3) now push the current idx in deque
+//     4) if(i>=k-1) push deq.front() into result array for that window
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
         int n = nums.size();
-        vector<int>nge(n,0);
-        stack<int>st;
-        st.push(n-1);
-        nge[n-1]=n;
-         for(int i=n-2;i>=0;i--)
-          {
-            while(st.size()>0 && nums[i]>nums[st.top()])
-            {
-                st.pop();
-            }
-            if(st.size()==0)
-            {
-                nge[i]=n;
-            }
-            else
-            {
-                nge[i]=st.top();
-            }
-            st.push(i);
-          }
-        int j=0;
         vector<int>ans;
-        for(int i=0;i<=n-k;i++)
+        deque<int>dq;
+        for(int i=0;i<n;i++)
         {
-            if(j<i)
+            while(!dq.empty() && dq.front() <= i-k)
             {
-                j=i;
+                dq.pop_front();
             }
-            while(nge[j] < i+k)
+            while(!dq.empty() && nums[dq.back()] < nums[i])
             {
-                j=nge[j];
+                dq.pop_back();
             }
-            ans.push_back(nums[j]);
+            dq.push_back(i);
+            if(i>=k-1) ans.push_back(nums[dq.front()]);
         }
         return ans;
     }
