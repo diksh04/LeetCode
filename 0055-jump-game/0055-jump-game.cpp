@@ -1,22 +1,17 @@
 class Solution {
 public:
-    bool helper(int idx,vector<int>& nums,vector<int>& dp)
-    {
-        if(idx==nums.size()-1) return true;
-        if(dp[idx]!=-1) return dp[idx];
-        int reach = idx + nums[idx];
-        
-        for(int k = idx+1;k<=reach;k++)
-        {
-            if(helper(k,nums,dp)) 
-            {
-                return dp[idx] = true;
-            }
-        }
-        return dp[idx] = false;
-    }
     bool canJump(vector<int>& nums) {
-        vector<int>dp(nums.size(),-1);
-        return helper(0,nums,dp);
+        // if(nums[0]==0) return true;
+        int n = nums.size();
+        int reach = 0;
+        for(int i=0;i<n;i++)
+        {
+            if(i>reach) 
+            {
+                return false;
+            }
+            reach = max(reach,i+nums[i]);
+        }
+        return true;
     }
 };
