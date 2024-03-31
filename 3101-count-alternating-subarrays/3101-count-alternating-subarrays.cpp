@@ -1,21 +1,19 @@
 class Solution {
 public:
     long long countAlternatingSubarrays(vector<int>& nums) {
-        long long int cnt = 1;
-        long long int ans = 0;
-        for(int i=1;i<nums.size();i++)
+        long long count = 0;
+        int n = nums.size();
+        for(int i=0;i<n;i++)
         {
-            if(nums[i]!=nums[i-1])
+            int j = i;
+            while(j+1 < n && nums[j]!=nums[j+1])
             {
-                cnt++;
+                j++;
             }
-            else
-            {
-                ans = ans + (cnt*(cnt+1))/2;
-                cnt = 1;
-            }
+            int len = j-i+1;
+            count += (long long)len * (len + 1) / 2;
+            i = j;
         }
-        ans = ans + (cnt*(cnt+1))/2;
-        return ans;
+        return count;
     }
 };
