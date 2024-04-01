@@ -5,17 +5,17 @@ public:
         int sum = 0;
         for(int i=0;i<n;i++)
         {
-            unordered_map<char,int>umap;
+            map<char,int>umap;
+            multiset<int>st;
             for(int j=i;j<n;j++)
             {
-                umap[s[j]]++;
-                int maxFreq = INT_MIN,minFreq = INT_MAX;
-                for(auto it:umap)
+                if(umap.find(s[j])!=umap.end())
                 {
-                    maxFreq = max(maxFreq,it.second);
-                    minFreq = min(minFreq,it.second);
+                    st.erase(st.find(umap[s[j]]));
                 }
-                sum+=(maxFreq-minFreq);
+                umap[s[j]]++;
+                st.insert(umap[s[j]]);
+                sum+=(*st.rbegin() - *st.begin());
             }
         }
         return sum;
