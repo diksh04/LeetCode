@@ -10,41 +10,47 @@
  */
 class Solution {
 public:
-    ListNode* reverseList(ListNode* head)
+    ListNode* rev(ListNode* head)
     {
-        ListNode* curr = head;
         ListNode* prev = NULL;
-        while(curr!=NULL)
+        ListNode* curr = head;
+        while(curr)
         {
             ListNode* temp = curr->next;
             curr->next = prev;
             prev = curr;
-            curr = temp;
+            curr=temp;
         }
         return prev;
     }
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
         if(l1==NULL) return l2;
-        if(l2==NULL) return l1;
-        ListNode* t1 = reverseList(l1);
-        ListNode* t2 = reverseList(l2);
-        int carry = 0;
-        ListNode* dummy = new ListNode(-1);
+        if(l2 == NULL) return l1;
+        ListNode* dummy = new ListNode(0);
+        l1 = rev(l1);
+        l2 = rev(l2);
+        int sum = 0,carry = 0;
         ListNode* ptr = dummy;
-        while(t1!=NULL || t2!=NULL || carry!=0)
+        while(l1!=NULL || l2!=NULL || carry!=0)
         {
-            int sum = 0;
-            if(t1) sum+=t1->val;
-            if(t2) sum+=t2->val;
-            sum+=carry;
+            sum = carry;
+            if(l1)
+            {
+                sum+=l1->val;
+            }
+            if(l2)
+            {
+                sum+=l2->val;
+            }
             ListNode* newNode = new ListNode(sum%10);
             carry = sum/10;
             ptr->next = newNode;
             ptr = ptr->next;
-            if(t1) t1 = t1->next;
-            if(t2) t2 = t2->next;
+            if(l1) l1 = l1->next;
+            if(l2) l2 = l2->next;
         }
-        ListNode* head = reverseList(dummy->next);
-        return head;
+
+        ptr = rev(dummy->next);
+        return ptr;
     }
 };
