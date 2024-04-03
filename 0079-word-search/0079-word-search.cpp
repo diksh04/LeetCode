@@ -2,11 +2,8 @@ class Solution {
 public:
     bool helper(int r,int c,vector<vector<char>>& board,string word,int k)
     {
-        if(k==word.size())
-        {
-            return true;
-        }
-        if(r<0 || c<0 || r>=board.size() || c>=board[0].size() || board[r][c]!=word[k] || board[r][c]=='#')
+        if(k==word.size()) return true;
+        if(r<0 || c<0 || r==board.size() || c==board[0].size() || board[r][c]!=word[k] || board[r][c] == '#')
         {
             return false;
         }
@@ -20,14 +17,16 @@ public:
         return op1 || op2 || op3 || op4;
     }
     bool exist(vector<vector<char>>& board, string word) {
-        
         for(int i=0;i<board.size();i++)
         {
             for(int j=0;j<board[0].size();j++)
             {
-                if(board[i][j]==word[0])
+                if(board[i][j] == word[0])
                 {
-                    if(helper(i,j,board,word,0)) return true;
+                    if(helper(i,j,board,word,0)==true)
+                    {
+                        return true;
+                    }
                 }
             }
         }
