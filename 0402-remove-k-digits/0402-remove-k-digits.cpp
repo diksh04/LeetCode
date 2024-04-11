@@ -5,10 +5,10 @@ public:
         stack<char>st;
         for(int i=0;i<num.size();i++)
         {
-            while(!st.empty() && k>0 && num[i] < st.top())
+            while(!st.empty() && k>0 && num[i]-'0' < st.top()-'0')
             {
+                st.pop();
                 k--;
-              st.pop();
             }
             st.push(num[i]);
         }
@@ -33,11 +33,7 @@ public:
         {
             return ans.substr(j);
         }
-        if(j==ans.size())
-        {
-            return "0";
-        }
-        if(ans=="") return "0";
+        if(j==ans.size()) return "0";
         return ans;
     }
 };
