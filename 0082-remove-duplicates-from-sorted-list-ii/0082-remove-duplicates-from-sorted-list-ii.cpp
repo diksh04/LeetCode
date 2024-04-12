@@ -26,7 +26,7 @@ public:
             }
             else
             {
-                while(curr!=NULL && curr->next!=NULL && curr->val == curr->next->val)
+                while(curr->next!=NULL && curr->val == curr->next->val)
                 {
                     ListNode* duplicate = curr;
                     curr = curr->next;
