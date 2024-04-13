@@ -20,7 +20,7 @@ public:
             int dis = it.first;
             int node = it.second;
             pq.pop();
-            if(dis > dist[node]) continue;
+            if(dis > dist[node]) continue;//we will never consider dis greater than our prev distance
             for(auto nbr:adj[node])
             {
                 int edW = nbr.second;
