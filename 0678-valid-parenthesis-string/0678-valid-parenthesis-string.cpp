@@ -12,20 +12,17 @@ public:
             {
                 star.push(i);
             }
-            else 
+            else if(s[i]==')')
             {
-                if(s[i]==')')
+                if(!open.empty())
                 {
-                    if(!open.empty())
-                    {
-                        open.pop();
-                    }
-                    else if(!star.empty())
-                    {
-                        star.pop();
-                    }
-                    else return false;
+                    open.pop();
                 }
+                else if(!star.empty())
+                {
+                    star.pop();
+                }
+                else return false;
             }
         }
         while(!open.empty() && !star.empty() && open.top() < star.top())
