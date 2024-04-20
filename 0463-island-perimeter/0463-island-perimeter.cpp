@@ -9,8 +9,10 @@ public:
                 if(grid[i][j] == 1)
                 {
                     perimeter+=4;
-                    if(i>0 && grid[i-1][j] == 1) perimeter-=2;
-                    if(j>0 && grid[i][j-1] == 1) perimeter-=2;
+                    if(i+1 < grid.size() && grid[i+1][j]==1) perimeter--;
+                    if(j+1 < grid[0].size() && grid[i][j+1] == 1) perimeter--;
+                    if(i>0 && grid[i-1][j] == 1) perimeter--;
+                    if(j>0 && grid[i][j-1] == 1) perimeter--;
                 }
             }
         }
