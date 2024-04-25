@@ -1,6 +1,5 @@
 class Solution {
 public:
-    
     int longestIdealString(string s, int k) {
         int n = s.size();
         vector<int>dp(26,0);
