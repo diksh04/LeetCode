@@ -1,38 +1,42 @@
 class Solution {
 public:
-    int myAtoi(string s) {
-        int i = 0;
-        while(i<s.size() && s[i]==' ')
+    int myAtoi(string str) {
+        if( str.size()==0)
         {
+            return 0;
+        }
+            
+        int len = str.size(), i=0, sign = 1;
+        
+        while( i<len && str[i] == ' ')
+            i++;
+        
+        if(i==len)
+            return 0;
+        
+        if(str[i] == '-'){
+            sign = 0;
             i++;
         }
-        if(i==s.size()) return 0;
-        int sign = 1;
-        if(s[i]=='-')
-        {
-            sign = -1;
+        else if(str[i] == '+')
+            i++;
+        
+        long int out = 0;
+        
+        while(str[i] >= '0' && str[i] <= '9'){
+            out = out * 10;
+            out = out + (str[i] - '0');
+            if(out <= INT_MIN || out >= INT_MAX)
+                break;
             i++;
         }
-        else if(s[i]=='+') i++;
-        long long num = 0;
-        while(i<s.size())
-        {
-            if(s[i]>='0' && s[i]<='9')
-            {
-                num = num * 10 + (s[i]-'0');
-                if(sign* num > INT_MAX)
-                {
-                    return INT_MAX;
-                }
-                else if(sign * num < INT_MIN)
-                {
-                    return INT_MIN;
-                }
-            }
-            else break;
-            i++;
-        }
-        num*=sign;
-        return num;
+        
+        if(sign == 0)
+            out = -1 * out;
+        if(out <= INT_MIN)
+            return INT_MIN;
+        if(out >= INT_MAX)
+            return INT_MAX;
+        return (int)out;
     }
 };
