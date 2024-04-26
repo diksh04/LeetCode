@@ -1,21 +1,21 @@
 class Solution {
 public:
     int beautySum(string s) {
-        int n = s.size();
         int sum = 0;
+        int n = s.size();
         for(int i=0;i<n;i++)
         {
-            map<char,int>umap;
-            multiset<int>st;
+            unordered_map<char,int>umap;
             for(int j=i;j<n;j++)
             {
-                if(umap.find(s[j])!=umap.end())
-                {
-                    st.erase(st.find(umap[s[j]]));
-                }
                 umap[s[j]]++;
-                st.insert(umap[s[j]]);
-                sum+=(*st.rbegin() - *st.begin());
+                int minFreq = INT_MAX,maxFreq = INT_MIN;
+                for(auto it:umap)
+                {
+                    minFreq = min(minFreq,it.second);
+                    maxFreq = max(maxFreq,it.second);
+                }
+                sum+=(maxFreq-minFreq);
             }
         }
         return sum;
