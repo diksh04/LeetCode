@@ -4,7 +4,7 @@ public:
     {
         if(idx==candidates.size())
         {
-            if(target == 0)
+            if(target == 0) 
             {
                 ans.push_back(temp);
             }
@@ -21,6 +21,7 @@ public:
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
         vector<vector<int>>ans;
         vector<int>temp;
+        sort(candidates.begin(),candidates.end());
         helper(0,candidates,target,temp,ans);
         return ans;
     }
