@@ -1,28 +1,32 @@
 class Solution {
 public:
-    void helper(int idx,string s,string output,vector<string>& ans)
+    void helper(int idx,string output,string s,vector<string> &ans)
     {
-        if(idx==s.size())
+        if(idx == s.size())
         {
             ans.push_back(output);
             return;
         }
-        if(!isalpha(s[idx]))
+        if(s[idx]>='0' && s[idx]<='9')
         {
-            helper(idx+1,s,output+s[idx],ans);
+            output.push_back(s[idx]);
+            helper(idx+1,output,s,ans);
         }
         else
         {
             char ch1 = tolower(s[idx]);
             char ch2 = toupper(s[idx]);
-            helper(idx+1,s,output+ch1,ans);
-            helper(idx+1,s,output+ch2,ans);
+            output.push_back(ch1);
+            helper(idx+1,output,s,ans);
+            output.pop_back();
+            output.push_back(ch2);
+            helper(idx+1,output,s,ans);
         }
     }
     vector<string> letterCasePermutation(string s) {
         vector<string>ans;
-        string output;
-        helper(0,s,output,ans);
+        string output = "";
+        helper(0,output,s,ans);
         return ans;
     }
 };
