@@ -1,17 +1,12 @@
 class Solution {
 public:
-    bool isValid(vector<vector<char>>& board,int r,int c,char ch)
+    bool isValid(int row,int col,vector<vector<char>>& board,int ch)
     {
         for(int i=0;i<9;i++)
         {
-            if(board[r][i]==ch)  return false;
-            
-            if(board[i][c]==ch) return false;
-            
-            if(board[3 * (r/3) + i /3 ][3 * (c/3) + i % 3] == ch)
-            {
-                return false;
-            }
+            if(board[row][i] == ch) return false;
+            if(board[i][col] == ch) return false;
+            if(board[3*(row/3)+i/3][3*(col/3)+i%3]==ch) return false;
         }
         return true;
     }
@@ -21,17 +16,14 @@ public:
         {
             for(int j=0;j<board[0].size();j++)
             {
-                if(board[i][j]=='.')
+                if(board[i][j] == '.')
                 {
                     for(char ch='1';ch<='9';ch++)
                     {
-                        if(isValid(board,i,j,ch))
+                        if(isValid(i,j,board,ch))
                         {
                             board[i][j] = ch;
-                            if(helper(board)==true)
-                            {
-                                return true;
-                            }
+                            if(helper(board)) return true;
                             else board[i][j] = '.';
                         }
                     }
