@@ -2,15 +2,13 @@ class Solution {
 public:
     bool isSafe(int r,int c,vector<string>& board,int n)
     {
-        //column check
-        for(int i=0;i<board.size();i++)
+        for(int i=0;i<n;i++)
         {
-            if(board[i][c]=='Q')
+            if(board[i][c] == 'Q')
             {
                 return false;
             }
         }
-        //upper left diagonal
         int row = r,col = c;
         while(row>=0 && col>=0)
         {
@@ -29,11 +27,12 @@ public:
     }
     void helper(int row,vector<string>& board,vector<vector<string>>& ans,int n)
     {
-        if(row == n){
+        if(row == n)
+        {
             ans.push_back(board);
             return;
         }
-        for(int col = 0;col<n;col++)
+        for(int col = 0;col < n;col++)
         {
             if(isSafe(row,col,board,n))
             {
