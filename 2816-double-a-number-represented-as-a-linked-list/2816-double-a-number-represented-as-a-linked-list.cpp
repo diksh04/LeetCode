@@ -8,31 +8,31 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-// 1 8 9
-//   * 2
-//     8
 class Solution {
 public:
     int helper(ListNode* temp)
     {
-        if(temp==NULL) return 0;
-        int carry = helper(temp->next);
-        temp->val = temp->val*2 + carry;
-        if(temp->val < 10)
+        if(temp == NULL)
         {
             return 0;
         }
-        int left = temp->val / 10;
+        int carry = helper(temp->next);
+        temp->val = temp->val * 2 + carry;
+        if(temp->val < 10 )
+        {
+            return 0;
+        }
+        int val = temp->val / 10;
         temp->val = temp->val % 10;
-        return left;
+        return val;
     }
     ListNode* doubleIt(ListNode* head) {
         int carry = helper(head);
-        if(carry>0)
+        if(carry > 0)
         {
-            ListNode* newHead = new ListNode(carry);
-            newHead->next = head;
-            head = newHead;
+            ListNode* newNode = new ListNode(carry);
+            newNode->next = head;
+            head = newNode;
         }
         return head;
     }
