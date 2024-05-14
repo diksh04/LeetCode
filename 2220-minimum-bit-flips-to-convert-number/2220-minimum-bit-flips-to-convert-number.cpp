@@ -1,27 +1,16 @@
 class Solution {
 public:
     int minBitFlips(int start, int goal) {
-        int res = start^goal;
-        int count = 0;
-        while(res>0)
+        int ans = start ^ goal;
+        int cnt = 0;
+        for(int i=0;i<=31;i++)
         {
-            res = res&(res-1);// makes least significant 1 bit to zero
-            count++;
+            if( (ans & (1 << i)))
+            {
+                // cout<<(ans & (1 << i))<<" ";
+                cnt++;
+            }
         }
-        return count;
+        return cnt;
     }
 };
-// method 2 
-//class Solution {
-// public:
-//     int minBitFlips(int start, int goal) {
-//         int res = start^goal;
-//         int count = 0;
-//         while(res>0)
-//         {
-//             count+=res&1;
-//             res = res>>1;
-//         }
-//         return count;
-//     }
-// };
