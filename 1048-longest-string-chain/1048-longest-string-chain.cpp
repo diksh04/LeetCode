@@ -1,40 +1,45 @@
 class Solution {
 public:
-    static bool compare(string &a,string &b)
+    bool static compare(string &s1,string &s2)
     {
-        return a.size() < b.size();
+        return s1.size() < s2.size();
     }
-    bool helper(string word1,string word2)
+    bool checkPossible(string &s1,string &s2)
     {
-        if(word1.size()!=word2.size()+1) return false;
+        if(s1.size()!=s2.size()+1) return false;
         int i=0,j=0;
-        while(i<word1.size())
+        while(i<s1.size())
         {
-            if(j<word2.size() && word1[i]==word2[j])
+            if(j<s2.size() && s1[i]==s2[j])
             {
                 i++;
                 j++;
             }
-            else i++;
+            else
+            { 
+                //abca abc
+                i++;
+            }
         }
-        return (i==word1.size() && j==word2.size());
+        if(i==s1.size() && j==s2.size()) return true;
+        return false;
     }
     int longestStrChain(vector<string>& words) {
         sort(words.begin(),words.end(),compare);
         int n = words.size();
         vector<int>dp(n,1);
-        int len = 1;
-        for(int idx=0;idx<n;idx++)
+        int maxi = 1;
+        for(int idx=1;idx<n;idx++)
         {
             for(int prev=0;prev<idx;prev++)
             {
-                if(helper(words[idx],words[prev]) && 1 + dp[prev] > dp[idx])
+                if(checkPossible(words[idx],words[prev]) && dp[idx] < 1 + dp[prev])
                 {
                     dp[idx] = 1 + dp[prev];
                 }
             }
-            len = max(len,dp[idx]);
+            maxi = max(maxi,dp[idx]);
         }
-        return len;
+        return maxi;
     }
 };
