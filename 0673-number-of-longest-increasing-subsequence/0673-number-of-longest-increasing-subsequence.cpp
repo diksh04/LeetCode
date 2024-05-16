@@ -8,12 +8,12 @@ public:
         {
             for(int prev=0;prev<idx;prev++)
             {
-                if(nums[idx]>nums[prev] && 1+dp[prev] > dp[idx])
+                if(nums[idx] > nums[prev] && 1 + dp[prev] > dp[idx])
                 {
                     dp[idx] = 1 + dp[prev];
                     cnt[idx] = cnt[prev];
                 }
-                else if(nums[idx]>nums[prev] && 1+dp[prev]==dp[idx])
+                else if(nums[idx] > nums[prev] && 1 + dp[prev] == dp[idx])
                 {
                     cnt[idx]+=cnt[prev];
                 }
@@ -23,10 +23,7 @@ public:
         int count = 0;
         for(int i=0;i<n;i++)
         {
-            if(dp[i]==maxi)
-            {
-                count+=cnt[i];
-            }
+           if(dp[i] == maxi) count+=cnt[i];
         }
         return count;
     }
